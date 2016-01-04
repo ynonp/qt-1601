@@ -18,14 +18,16 @@ SOURCES += main.cpp\
     clickablelabel.cpp \
     coolwiddget.cpp \
     countedtextedit.cpp \
-    keysfilter.cpp
+    keysfilter.cpp \
+    tictactoeboard.cpp
 
 HEADERS  += mainwindow.h \
     clickcounter.h \
     clickablelabel.h \
     coolwiddget.h \
     countedtextedit.h \
-    keysfilter.h
+    keysfilter.h \
+    tictactoeboard.h
 
 FORMS    += mainwindow.ui \
     clickcounter.ui \
