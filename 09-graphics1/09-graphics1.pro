@@ -14,9 +14,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    triangleitem.cpp
+    triangleitem.cpp \
+    bouncingballitem.cpp
 
 HEADERS  += mainwindow.h \
-    triangleitem.h
+    triangleitem.h \
+    bouncingballitem.h
 
 FORMS    += mainwindow.ui

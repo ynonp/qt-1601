@@ -22,7 +22,9 @@ void TriangleItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 
 void TriangleItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    translate(m_w/2, m_h/2);
     rotate(10);
+    translate(-m_w/2, -m_h/2);
 }
 
 

@@ -1,7 +1,11 @@
+#include <QtGui>
+#include <QtCore>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QtGui>
 #include "triangleitem.h"
+#include "bouncingballitem.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -9,26 +13,63 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QGraphicsScene *scene = new QGraphicsScene;
-    TriangleItem *i = new TriangleItem(100, 100);
-    scene->addItem(i);
-    scene->addRect(100, 100, 100, 100, QColor(Qt::black), QColor(Qt::blue).lighter(130));
-    scene->addRect(200, 200, 100, 100, QColor(Qt::black), QColor(Qt::blue).lighter(80));
-    i->moveBy(350, 350);
+    m_scene = new QGraphicsScene;
+    m_ball = new BouncingBallItem;
 
-    /*
-    if(ball->collidesWithItem(northWall))
-    {
-        ball->changeDirection();
-    }
+    QGraphicsItem *w1 = new QGraphicsRectItem(0, 0, 220, 20);
+    QGraphicsItem *w2 = new QGraphicsRectItem(0, 0, 220, 20);
+    QGraphicsItem *w3 = new QGraphicsRectItem(0, 0, 20, 220);
+    QGraphicsItem *w4 = new QGraphicsRectItem(0, 0, 20, 220);
 
-    scene->collidingItems(i);
-    */
+    m_walls << w1 << w2 << w3 << w4;
+    m_scene->addItem(w1);
+    m_scene->addItem(w2);
+    m_scene->addItem(w3);
+    m_scene->addItem(w4);
 
-    ui->graphicsView->setScene(scene);
+
+    w2->moveBy(0, 200);
+    w4->moveBy(200, 0);
+    m_ball->moveBy(100, 100);
+    m_scene->addItem(m_ball);
+
+    ui->graphicsView->setScene(m_scene);
+    m_timer.setInterval(5);
+    m_timer.start();
+    QObject::connect(&m_timer, SIGNAL(timeout()), this, SLOT(timeout()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::timeout()
+{
+    foreach (QGraphicsItem *wall, m_walls)
+    {
+        if (m_ball->collidesWithItem(wall))
+        {
+            m_ball->bounce();
+            break;
+        }
+    }
+
+    m_scene->advance();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
